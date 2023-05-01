@@ -5,6 +5,7 @@ const  UserRepository  =require('../repository/user-repository');
 const {JWT_KEY}=require('../config/serverConfig');
 
 const bcrypt=require('bcrypt');
+const AppErrors=require('../utils/error-handler');
 
 class UserService{
 
@@ -18,8 +19,11 @@ async create(data){
         const user= await this.userRepository.create(data);
         return user;
     } catch (error) {
+        if(error.name=='SequelizeValidationError'){
+               throw error; 
+        }
         console.log("something went wrong in the service layer");
-        throw {error};
+        throw error; 
     }
 }
 
@@ -42,8 +46,11 @@ async signIn(email,plainPassword){
         
     } 
     catch (error) {
+        if(error.name=='AttributeNotFound'){
+            throw error;
+        }
         console.log("something went wrong in signIn process");
-        throw {error};
+       throw error;
     }
 }
 
