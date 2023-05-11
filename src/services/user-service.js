@@ -57,8 +57,8 @@ async signIn(email,plainPassword){
 
 createToken(user){
     try {
-       const result =jwt.sign(user,JWT_KEY,{expiresIn:'1d'});
-       return result; 
+       const result =jwt.sign(user,JWT_KEY,{expiresIn:'1d'}); //the jwt is created by user info like username and userId
+       return result;                                          //so we can get the username and userId back from token also if we get token
     } 
     catch (error) {
         console.log("something went wrong in token creation");
@@ -68,7 +68,7 @@ createToken(user){
 
 verifyToken(token){
     try {
-       const response =jwt.verify(token,JWT_KEY);
+       const response =jwt.verify(token,JWT_KEY);  //this will verify the token
        return response; 
     } 
     catch (error) {
@@ -93,7 +93,7 @@ async isAuthenticated(token){
         if(!response){
              throw {error:'invalid token'}
         }
-        const user= await this.userRepository.getById(response.id);
+        const user= await this.userRepository.getById(response.id);  //we get userId from token
         if(!user){
             throw {error:'no user with the corresponding token exists'}
         }

@@ -6,7 +6,7 @@ const {StatusCodes}=require('http-status-codes');
 
 class UserRepository {
 
-    async create(data){
+    async create(data){   //it means sign up ,creating a new user
         try {
             const user= await User.create(data);
             return user;
@@ -43,7 +43,7 @@ class UserRepository {
         async getById(userId){
             try {
                 const user =await User.findByPk(userId,{
-                    attributes:['email','id']
+                    attributes:['email','id']  //it means that it will return only email and id ,not all the attributes as we only want this
                 });
                 return user;
             } 
